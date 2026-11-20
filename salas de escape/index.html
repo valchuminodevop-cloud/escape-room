@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El misterio de los cuatro umbrales</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="tema-portal">
+
+    <header class="encabezado">
+        <p class="sobre-titulo">ARCHIVO DE ACCESO RESTRINGIDO</p>
+        <h1>El misterio de los cuatro umbrales</h1>
+        <p class="subtitulo">
+            Cuatro puertas. Dieciséis enigmas. Una verdad oculta.
+        </p>
+    </header>
+
+    <main>
+
+        <!-- PORTAL PRINCIPAL -->
+        <section id="portal" class="portal">
+
+            <div class="introduccion">
+                <span class="sello">✦ EXPEDIENTE CLASIFICADO ✦</span>
+                <h2>El archivo te estaba esperando</h2>
+                <p>
+                    Cada partida contiene una combinación diferente
+                    de desafíos. Algunas respuestas revelan números.
+                    Otras revelan fragmentos de una historia que alguien
+                    intentó ocultar.
+                </p>
+            </div>
+
+            <section class="panel-partida">
+                <div>
+                    <p class="etiqueta-enigma">ESTADO DE LA INVESTIGACIÓN</p>
+                    <h3 id="titulo-partida">Partida recuperada</h3>
+                    <p id="estado-partida">
+                        Tu investigación está lista para continuar.
+                    </p>
+                </div>
+
+                <div class="acciones-partida">
+                    <button
+                        id="boton-nueva-partida"
+                        class="boton-nueva"
+                        onclick="nuevaPartida()">
+                        ✦ Nueva partida
+                    </button>
+                </div>
+            </section>
+
+            <div class="progreso-general">
+                <div class="progreso-texto">
+                    <span>Progreso de la investigación</span>
+                    <span id="contador-general">0 de 16 desafíos</span>
+                </div>
+
+                <div class="barra-fondo">
+                    <div id="barra-general" class="barra-relleno"></div>
+                </div>
+
+                <p id="estado-general" class="nota-guardado">
+                    Tus avances se guardan automáticamente.
+                </p>
+            </div>
+
+            <div id="salas-grid" class="salas-grid">
+                <!-- Las cuatro salas se generan desde JavaScript -->
+            </div>
+
+        </section>
+
+        <!-- INTERIOR DE LAS SALAS -->
+        <section id="juego" class="juego" hidden>
+
+            <button class="boton-volver" onclick="volverPortal()">
+                ← Volver al archivo
+            </button>
+
+            <div class="encabezado-sala">
+                <p id="etiqueta-sala" class="sobre-titulo"></p>
+                <h2 id="titulo-sala"></h2>
+                <p id="descripcion-sala"></p>
+            </div>
+
+            <div class="introduccion-historia">
+                <p class="etiqueta-enigma">FRAGMENTO DEL EXPEDIENTE</p>
+                <p id="introduccion-historia"></p>
+            </div>
+
+            <!-- CANDADO -->
+            <div class="candado-contenedor">
+                <div class="candado">
+                    <div class="candado-arco"></div>
+
+                    <div class="candado-cuerpo">
+                        <div class="candado-titulo">CÓDIGO DE ACCESO</div>
+
+                        <div class="ruedas">
+                            <span id="rueda1">?</span>
+                            <span id="rueda2">?</span>
+                            <span id="rueda3">?</span>
+                            <span id="rueda4">?</span>
+                        </div>
+
+                        <div class="candado-ornamento">✦ ✧ ✦</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROGRESO -->
+            <div class="progreso-sala">
+                <div class="progreso-texto">
+                    <span id="contador-enigmas">Enigma 1 de 4</span>
+                    <span id="porcentaje">0%</span>
+                </div>
+
+                <div class="barra-fondo">
+                    <div id="barra-sala" class="barra-relleno"></div>
+                </div>
+            </div>
+
+            <!-- PANEL DE PREGUNTAS -->
+            <article id="panel-enigma" class="panel-enigma">
+
+                <div class="datos-enigma">
+                    <span id="categoria-enigma" class="categoria"></span>
+                    <span id="dificultad-enigma" class="dificultad"></span>
+                </div>
+
+                <p class="etiqueta-enigma">PRUEBA DE CONOCIMIENTO</p>
+
+                <h3 id="pregunta"></h3>
+
+                <p id="contexto" class="contexto"></p>
+
+                <div id="zona-respuesta">
+                    <label for="respuesta">Tu respuesta:</label>
+
+                    <input
+                        type="text"
+                        id="respuesta"
+                        placeholder="Escribí tu respuesta..."
+                        autocomplete="off"
+                    >
+
+                    <p id="mensaje" class="mensaje" aria-live="polite"></p>
+
+                    <div class="acciones">
+                        <button
+                            class="boton-pista"
+                            onclick="mostrarPista()">
+                            Ver pista
+                        </button>
+
+                        <button
+                            class="boton-comprobar"
+                            onclick="comprobarRespuesta()">
+                            Comprobar respuesta
+                        </button>
+                    </div>
+
+                    <p id="pista" class="pista" hidden></p>
+                </div>
+
+                <!-- RESPUESTA CORRECTA -->
+                <div id="resultado-enigma" class="resultado-enigma" hidden>
+                    <p class="respuesta-correcta">✦ RESPUESTA CORRECTA</p>
+
+                    <p id="explicacion"></p>
+
+                    <div class="fragmento-revelado">
+                        <p class="etiqueta-enigma">NUEVO FRAGMENTO DESCUBIERTO</p>
+                        <p id="fragmento-historia"></p>
+                    </div>
+
+                    <button
+                        id="boton-continuar"
+                        class="boton-comprobar"
+                        onclick="continuarEnigma()">
+                        Continuar investigación
+                    </button>
+                </div>
+
+            </article>
+
+            <!-- PANEL DEL CÓDIGO -->
+            <section id="panel-codigo" class="panel-codigo" hidden>
+
+                <p class="etiqueta-enigma">ÚLTIMA PRUEBA</p>
+
+                <h3>Los cuatro números han sido revelados</h3>
+
+                <p>
+                    Has reunido todas las cifras. Ahora tenés que
+                    encontrar la combinación que abre el candado.
+                </p>
+
+                <div id="codigo-revelado" class="codigo-revelado"></div>
+
+                <label for="codigo-final">Combinación de acceso:</label>
+
+                <input
+                    type="text"
+                    id="codigo-final"
+                    maxlength="4"
+                    inputmode="numeric"
+                    placeholder="0000"
+                >
+
+                <p id="mensaje-codigo" class="mensaje" aria-live="polite"></p>
+
+                <button
+                    class="boton-comprobar"
+                    onclick="abrirCandado()">
+                    Desbloquear
+                </button>
+
+            </section>
+
+            <!-- SALA COMPLETADA -->
+            <section id="sala-completada" class="sala-completada" hidden>
+
+                <div class="simbolo-completado">✧</div>
+
+                <p class="etiqueta-enigma">ACCESO CONCEDIDO</p>
+
+                <h3 id="titulo-completado">Candado desbloqueado</h3>
+
+                <p id="texto-completado"></p>
+
+                <button
+                    class="boton-comprobar"
+                    onclick="volverPortal()">
+                    Regresar al archivo
+                </button>
+
+            </section>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>EL MISTERIO DE LOS CUATRO UMBRALES</p>
+        <span>Un recorrido por los laberintos del pensamiento</span>
+    </footer>
+
+    <script src="juego.js"></script>
+
+</body>
+</html>
